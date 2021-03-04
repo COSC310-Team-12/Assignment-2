@@ -27,20 +27,16 @@ connection.onmessage = event => {
 };
 
 $("#close").click(function (e) {
-    ipcRenderer.sendSync('close_app');
+    addToChat = function () { };
+    showNotification = function () { };
+    sendMessage("[DONE]");
+    setTimeout(() => { connection.close(); }, 1000);
+    setTimeout(() => { ipcRenderer.sendSync('close_app'); }, 1000);
 });
 
 $("#minimize").click(function (e) {
     ipcRenderer.sendSync('minimize_app');
 });
-
-//Close websocket
-window.onbeforeunload = function(){
-    addToChat = function(){};
-    showNotification = function(){};
-    sendMessage("[DONE]");
-    connection.close();
- }
 
 var Message = function (arg) {
     this.text = arg.text, this.message_side = arg.message_side;
