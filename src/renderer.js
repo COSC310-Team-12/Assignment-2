@@ -2,7 +2,7 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 let $ = jQuery = require('jquery');
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron');
 const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 
 connection.onopen = () => {
