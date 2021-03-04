@@ -34,6 +34,13 @@ $("#minimize").click(function (e) {
     ipcRenderer.sendSync('minimize_app');
 });
 
+//Close websocket
+window.onbeforeunload = function(){
+    addToChat = function(){};
+    showNotification = function(){};
+    sendMessage("[DONE]");
+    connection.close();
+ }
 
 var Message = function (arg) {
     this.text = arg.text, this.message_side = arg.message_side;
@@ -80,9 +87,7 @@ var showNotification = function (text) {
     $('#notification').toast('show');
 };
 
-var getMessageText, message_side;
-message_side = 'right';
-getMessageText = function () {
+var getMessageText = function () {
     var $message_input;
     $message_input = $('.message_input');
     return $message_input.val();
