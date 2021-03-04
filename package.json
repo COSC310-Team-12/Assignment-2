@@ -18,24 +18,7 @@
     },
     "portable": {
       "artifactName": "ChatBot.exe"
-    },
-    "nsis": {
-      "installerIcon": "src/icon/win.ico",
-      "uninstallerIcon": "src/icon/win.ico",
-      "uninstallDisplayName": "ChatBot",
-      "license": "license.txt",
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    },
-    "extraFiles": [
-      {
-        "from": "resources/bin",
-        "to": "Resources/bin",
-        "filter": [
-          "**/*"
-        ]
-      }
-    ]
+    }
   },
   "author": "Brian Zhou",
   "license": "ISC",
