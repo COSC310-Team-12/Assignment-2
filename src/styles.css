@@ -75,7 +75,8 @@ body {
   padding: 20px 10px 0 10px;
   margin: 0;
   height: 347px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .messages .message {
