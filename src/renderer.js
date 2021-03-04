@@ -9,6 +9,7 @@ const bootstrap = require('bootstrap');
 const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 
 connection.onopen = () => {
+    showNotification('Connected to server');
     console.log('connected');
 };
 
@@ -32,6 +33,7 @@ $("#close").click(function (e) {
 $("#minimize").click(function (e) {
     ipcRenderer.sendSync('minimize_app');
 });
+
 
 var Message = function (arg) {
     this.text = arg.text, this.message_side = arg.message_side;
@@ -73,6 +75,10 @@ var addToChat = function (text, message_side) {
     }, 300);
 };
 
+var showNotification = function (text) {
+    $('#notification_text').text(text);
+    $('#notification').toast('show');
+};
 
 var getMessageText, message_side;
 message_side = 'right';
