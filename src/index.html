@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+
+  </head>
+<body>
+    
+<div class="chat_window">
+    <div class="top_menu">
+        <div class="buttons">
+            <div class="button" id="close"></div>
+            <div class="button" id="minimize"></div>
+        </div>
+        <div class="title">Chat</div>
+    </div>
+    <ul class="messages"></ul>
+    <div class="bottom_wrapper clearfix">
+        <div class="message_input_wrapper">
+            <input class="message_input" placeholder="Type your message here..." />
+        </div>
+        <div class="send_message">
+            <div class="icon"></div>
+            <div class="text">Send</div>
+        </div>
+    </div>
+</div>
+<div class="message_template">
+    <li class="message">
+        <div class="avatar"></div>
+        <div class="text_wrapper">
+            <div class="text"></div>
+        </div>
+    </li>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

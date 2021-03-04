@@ -1,0 +1,50 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "A ChatBot",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "chatbot",
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "src/icon/win.ico"
+    },
+    "portable": {
+      "artifactName": "ChatBot.exe"
+    },
+    "nsis": {
+      "installerIcon": "src/icon/win.ico",
+      "uninstallerIcon": "src/icon/win.ico",
+      "uninstallDisplayName": "ChatBot",
+      "license": "license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraFiles": [
+      {
+        "from": "resources/bin",
+        "to": "Resources/bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "author": "Brian Zhou",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "electron": "^10.4.0",
+    "electron-builder": "^22.10.5"
+  }
+}

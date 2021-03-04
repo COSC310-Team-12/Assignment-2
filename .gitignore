@@ -1,60 +1,71 @@
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
+.DS_Store
+.env
+.gclient_done
+**/.npmrc
+.tags*
+.vs/
+.vscode/
+*.log
+*.pyc
+*.sln
 *.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
+*.VC.db
+*.VC.VC.opendb
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.xcodeproj
+/.idea/
+/dist/
+/external_binaries/
+/out/
+/vendor/.gclient
+/vendor/debian_jessie_mips64-sysroot/
+/vendor/debian_stretch_amd64-sysroot/
+/vendor/debian_stretch_arm-sysroot/
+/vendor/debian_stretch_arm64-sysroot/
+/vendor/debian_stretch_i386-sysroot/
+/vendor/gcc-4.8.3-d197-n64-loongson/
+/vendor/readme-gcc483-loongson.txt
+/vendor/download/
+/vendor/llvm-build/
+/vendor/llvm/
+/vendor/npm/
+/vendor/python_26/
+/vendor/native_mksnapshot
+/vendor/LICENSES.chromium.html
+/vendor/pyyaml
+node_modules/
+SHASUMS256.txt
+**/package-lock.json
+compile_commands.json
+.envrc
 
-# External tool builders
-.externalToolBuilders/
+# npm package
+/npm/dist
+/npm/path.txt
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+.npmrc
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+# Generated API definitions
+electron-api.json
+electron.d.ts
 
-# CDT-specific (C/C++ Development Tooling)
-.cproject
+# Spec hash calculation
+spec/.hash
 
-# CDT- autotools
-.autotools
+# Eslint Cache
+.eslintcache*
 
-# Java annotation processor (APT)
-.factorypath
+# Generated native addon files
+/spec-main/fixtures/native-addon/echo/build/
 
-# PDT-specific (PHP Development Tools)
-.buildpath
+# If someone runs tsc this is where stuff will end up
+ts-gen
 
-# sbteclipse plugin
-.target
+# Used to accelerate CI builds
+.depshash
+.depshash-target
 
-# Tern plugin
-.tern-project
-
-# TeXlipse plugin
-.texlipse
-
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
-
-# Annotation Processing
-.apt_generated/
-.apt_generated_test/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
-
-# Uncomment this line if you wish to ignore the project description file.
-# Typically, this file would be tracked if it contains build/dependency configurations:
-#.project
+# Used to accelerate builds after sync
+patches/mtime-cache.json
