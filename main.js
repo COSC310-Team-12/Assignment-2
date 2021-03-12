@@ -13,7 +13,8 @@ function createWindow () {
     width: 800,
     height: 500,
     frame: false,
-    resizable: false,
+    resizable: true,
+    minWidth: 400,
     webPreferences: {
       nodeIntegration: true
     }
@@ -27,7 +28,7 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 
 }
 

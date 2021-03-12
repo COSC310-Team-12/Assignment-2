@@ -4,6 +4,7 @@
 
 body {
   font-family: "Calibri", "Roboto", sans-serif;
+  min-width: 400px;
 }
 
 .top_menu {
@@ -17,8 +18,7 @@ body {
 .chat_window {
   position: absolute;
   width: 100%;
-  max-width: 800px;
-  height: 500px;
+  height: 100%;
   border-radius: 0px;
   background-color: #fff;
   left: 50%;
@@ -32,6 +32,7 @@ body {
 .top_menu {
   background-color: #fff;
   width: 100%;
+  height: 65px;
   padding: 20px 0 15px;
   box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
 }
@@ -74,7 +75,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 347px;
+  height: calc(100% - 95px - 65px);
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -173,10 +174,10 @@ body {
 
 .bottom_wrapper {
   position: relative;
+  height: 95px;
   width: 100%;
   background-color: #fff;
   padding: 20px 20px;
-  position: absolute;
   bottom: 0;
 }
 

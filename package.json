@@ -1,7 +1,7 @@
 {
-  "name": "chatbot",
+  "name": "hablai",
   "version": "1.0.0",
-  "description": "A ChatBot",
+  "description": "A ChatBot based on ParlAI",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,7 +9,7 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "chatbot",
+    "appId": "hablai",
     "win": {
       "target": [
         "portable"
@@ -17,7 +17,7 @@
       "icon": "src/icon/win.ico"
     },
     "portable": {
-      "artifactName": "ChatBot.exe"
+      "artifactName": "HablAI.exe"
     }
   },
   "author": "Brian Zhou",

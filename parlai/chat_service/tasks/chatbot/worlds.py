@@ -60,9 +60,9 @@ class MessengerBotChatTaskWorld(World):
             self.agent.observe(
                 {
                     'id': 'World',
-                    'text': 'Welcom to ChatBot!\n'
-                    'You are now paired with a bot - feel free to send a message.\n'
-                    'Type [DONE] to finish the chat, or [RESET] to reset the dialogue history.',
+                    'text': 'Welcom to HablAI!\n'
+                    'Type [DONE] to finish the chat, or [RESET] to reset the dialogue history.\n'
+                    'Press Ctrl+Shift+I to open the debug window for more information.'
                 }
             )
             self.first_time = False

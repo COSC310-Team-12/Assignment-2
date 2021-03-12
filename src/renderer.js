@@ -6,7 +6,7 @@ const { ipcRenderer } = require('electron');
 const { createPopper } = require('@popperjs/core');
 const bootstrap = require('bootstrap');
 
-const connection = new WebSocket('ws://127.0.0.1:10001/websocket');
+const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 let connected = false;
 
 connection.onopen = () => {
@@ -27,21 +27,9 @@ connection.onerror = error => {
 };
 
 connection.onmessage = event => {
-    console.log('received', event.data);
     var response = processResponse(event.data);
     addToChat(response.message.phrase, 'left');
 };
-
-$("#close").click(function (e) {
-    addToChat = function () { };
-    showNotification = function () { };
-    setTimeout(() => { connection.close(); }, 1000);
-    setTimeout(() => { ipcRenderer.sendSync('close_app'); }, 1000);
-});
-
-$("#minimize").click(function (e) {
-    ipcRenderer.sendSync('minimize_app');
-});
 
 var Message = function (arg) {
     this.text = arg.text, this.message_side = arg.message_side;
@@ -67,6 +55,10 @@ var sendMessage = function (text) {
 };
 
 function processResponse(rawdata) {
+    console.groupCollapsed('recieved response');
+    console.log(rawdata);
+    console.groupEnd();
+
     rawdata = JSON.parse(rawdata);
 
     var msg = {
@@ -83,13 +75,36 @@ function processResponse(rawdata) {
     if (response.beam_texts)
         response.message = weightedRandom(response.beam_texts);
 
-    console.log('message:', response.message);
-    console.log("beam_texts:", response.beam_texts);
-    console.log("quick_reply:", response.quick_reply);
+    console.group('processing reponse');
 
+    console.group('message: ');
+    console.table([response.message]);
+    console.groupEnd();
+
+    console.group('beam_texts: ');
+    console.table(response.beam_texts);
+    console.groupEnd();
+
+    console.group('quick_reply: ');
+    console.table(response.quick_reply);
+    console.groupEnd();
+    
+    console.groupEnd();
     return response;
 }
 
+/**
+Function to map probability to logrithmic scale.
+This is due to the fact that the difference in 
+    probability between each responses are very similar.
+Doing this ensures that the response with the highest
+    probability will be prefered, even if the difference
+    in probability between responses are only a few %
+This also give the bot a chance to pick the lower probability
+    responses, which makes it more natural.
+
+@param array    Array of messages
+**/
 function transformProbability(array) {
     if (!array) return array;
     var dict = [];
@@ -107,9 +122,9 @@ function transformProbability(array) {
     var sum2 = 0;
     for (var i = 0; i < dict.length; i++) {
         var val = dict[i].probability;
-        //Map probability to 0-1 scale.
+        // Map probability to 0-1 scale.
         var prob = 0.01 / (val / sum);
-        //Map linear scale to logrithmic scale
+        // Map linear scale to logrithmic scale
         var prob = prob * (1 / (i + 1));
 
         sum2 += prob;
@@ -117,7 +132,7 @@ function transformProbability(array) {
     }
 
     dict.forEach(function (item) {
-        //Map probability to 0-1 scale again.
+        // Map probability to 0-1 scale again.
         item.probability = item.probability / sum2;
     });
 
@@ -137,6 +152,7 @@ function weightArray(array) {
     return [].concat(...array.map((obj) => Array(Math.ceil(obj.probability * 100)).fill(obj)));
 }
 
+// Add messages to the chat window.
 var addToChat = function (text, message_side) {
     var $messages, message;
     if (text.trim() === '') {
@@ -154,11 +170,6 @@ var addToChat = function (text, message_side) {
     }, 300);
 };
 
-var showNotification = function (text) {
-    $('#notification_text').text(text);
-    $('#notification').toast('show');
-};
-
 var getMessageText = function () {
     var $message_input;
     $message_input = $('.message_input');
@@ -169,9 +180,26 @@ $('.send_message').click(function (e) {
     sendMessage(getMessageText())
     return addToChat(getMessageText(), 'right');
 });
+
 $('.message_input').keyup(function (e) {
     if (e.which === 13) {
         sendMessage(getMessageText())
         return addToChat(getMessageText(), 'right');
     }
 });
+
+$("#close").click(function (e) {
+    addToChat = function () { };
+    showNotification = function () { };
+    setTimeout(() => { connection.close(); }, 1000);
+    setTimeout(() => { ipcRenderer.sendSync('close_app'); }, 1000);
+});
+
+$("#minimize").click(function (e) {
+    ipcRenderer.sendSync('minimize_app');
+});
+
+var showNotification = function (text) {
+    $('#notification_text').text(text);
+    $('#notification').toast('show');
+};
