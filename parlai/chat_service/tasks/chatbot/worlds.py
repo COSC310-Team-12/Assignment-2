@@ -60,8 +60,8 @@ class MessengerBotChatTaskWorld(World):
             self.agent.observe(
                 {
                     'id': 'World',
-                    'text': 'Welcome to [ChatBot]'
-                    'You are now paired with a bot - feel free to send a message.'
+                    'text': 'Welcom to ChatBot!\n'
+                    'You are now paired with a bot - feel free to send a message.\n'
                     'Type [DONE] to finish the chat, or [RESET] to reset the dialogue history.',
                 }
             )
@@ -118,5 +118,23 @@ class MessengerOverworld(World):
     def parley(self):
         if self.first_time:
             self.first_time = False
+        self.episodeDone = True
+        return 'default'
+
+"""  
+        a = self.agent.act()
+        if a is not None and a['text'].lower() == 'exit':
+            self.episode_done = True
+            return 'EXIT'
+        if a is not None and a['text'].lower() == 'begin':
             self.episodeDone = True
             return 'default'
+        elif a is not None:
+            self.agent.observe(
+                {
+                    'id': 'Overworld',
+                    'text': 'Invalid option. Please type "begin".',
+                    'quick_replies': ['begin'],
+                }
+            )
+"""
