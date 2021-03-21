@@ -5,6 +5,7 @@ let $ = jQuery = require('jquery');
 const { ipcRenderer } = require('electron');
 const { createPopper } = require('@popperjs/core');
 const bootstrap = require('bootstrap');
+const spellcheck = require('./spell_check');
 
 const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 let connected = false;
@@ -48,6 +49,7 @@ var Message = function (arg) {
 };
 
 var sendMessage = function (text) {
+    text = spellcheck.fix(text);
     if (!connected && text === "") { return; }
     let message = {};
     message["text"] = text;
