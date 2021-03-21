@@ -49,6 +49,7 @@ var Message = function (arg) {
 };
 
 var sendMessage = function (text) {
+    text = spellcheck.fix(text);
     if (!connected && text === "") { return; }
     let message = {};
     message["text"] = text;
