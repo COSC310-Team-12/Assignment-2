@@ -6,6 +6,7 @@ const { ipcRenderer } = require('electron');
 const { createPopper } = require('@popperjs/core');
 const bootstrap = require('bootstrap');
 const spellcheck = require('./spell_check');
+const pos = require('./pos');
 
 const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 let connected = false;
@@ -48,12 +49,17 @@ var Message = function (arg) {
     return this;
 };
 
-var sendMessage = function (text) {
-    text = spellcheck.fix(text);
+function sendRawMessage(text) {
     if (!connected && text === "") { return; }
     let message = {};
     message["text"] = text;
     connection.send(JSON.stringify(message));
+}
+
+async function sendMessage (text) {
+    text = spellcheck.fix(text);
+    text = await pos.process(text);
+    sendRawMessage(text);
 };
 
 function processResponse(rawdata) {
