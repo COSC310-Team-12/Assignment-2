@@ -68,7 +68,6 @@ async function process(sentence) {
             //console.log(adv, getrank(adv), newadv, rank);
         }
     }
-    console.log(sentence);
     return sentence;
 }
 
