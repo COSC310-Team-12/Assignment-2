@@ -1,8 +1,8 @@
 const csv = require('fast-csv');
 const fs = require('fs');
 const path = require('path');
-const WordPOS = require('wordpos'),
-    wordpos = new WordPOS();
+const WordPOS = require('wordpos');
+const wordpos = new WordPOS();
 
 var com_phrase = {}; // word => rank
 initialize();
