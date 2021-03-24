@@ -28,6 +28,7 @@
     "dotenv": "^8.2.0",
     "fast-csv": "^4.3.6",
     "jquery": "^3.6.0",
+    "sentiment": "^5.0.2",
     "typo-js": "^1.2.0",
     "wordpos": "^2.1.0"
   },

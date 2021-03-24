@@ -7,17 +7,19 @@ const { createPopper } = require('@popperjs/core');
 const bootstrap = require('bootstrap');
 const spellcheck = require('./spell_check');
 const pos = require('./pos');
+const sentiment = require('./sentiment');
+const helper = require('./helper');
 
 const connection = new WebSocket('ws://51.141.164.131:10001/websocket');
 let connected = false;
 
 connection.onopen = () => {
     sendMessage("[START]");
-    setTimeout(() => { 
+    setTimeout(() => {
         showNotification('Connected to server');
         connected = true;
         console.log('connected');
-     }, 1000);
+    }, 1000);
 };
 
 connection.onclose = () => {
@@ -48,117 +50,6 @@ var Message = function (arg) {
     }(this);
     return this;
 };
-
-function sendRawMessage(text) {
-    if (!connected && text === "") { return; }
-    let message = {};
-    message["text"] = text;
-    connection.send(JSON.stringify(message));
-}
-
-async function sendMessage (text) {
-    text = spellcheck.fix(text);
-    text = await pos.process(text);
-    sendRawMessage(text);
-};
-
-function processResponse(rawdata) {
-    console.groupCollapsed('recieved response');
-    console.log(rawdata);
-    console.groupEnd();
-
-    rawdata = JSON.parse(rawdata);
-
-    var msg = {
-        phrase: rawdata["text"],
-        probability: 1
-    };
-
-    var response = {
-        message: msg,
-        beam_texts: transformProbability(rawdata["beam_texts"]),
-        quick_reply: rawdata["quick_replies"]
-    };
-
-    if (response.beam_texts)
-        response.message = weightedRandom(response.beam_texts);
-
-    console.group('processing reponse');
-
-    console.group('message: ');
-    console.table([response.message]);
-    console.groupEnd();
-
-    console.group('beam_texts: ');
-    console.table(response.beam_texts);
-    console.groupEnd();
-
-    console.group('quick_reply: ');
-    console.table(response.quick_reply);
-    console.groupEnd();
-    
-    console.groupEnd();
-    return response;
-}
-
-/**
-Function to map probability to logrithmic scale.
-This is due to the fact that the difference in 
-    probability between each responses are very similar.
-Doing this ensures that the response with the highest
-    probability will be prefered, even if the difference
-    in probability between responses are only a few %
-This also give the bot a chance to pick the lower probability
-    responses, which makes it more natural.
-
-@param array    Array of messages
-**/
-function transformProbability(array) {
-    if (!array) return array;
-    var dict = [];
-    var sum = 0;
-    array.forEach(function (item) {
-        //Create beam_text object
-        var beam_text = {
-            phrase: item[0],
-            probability: item[1]
-        }
-        dict.push(beam_text);
-        sum += beam_text.probability;
-    });
-
-    var sum2 = 0;
-    for (var i = 0; i < dict.length; i++) {
-        var val = dict[i].probability;
-        // Map probability to 0-1 scale.
-        var prob = 0.01 / (val / sum);
-        // Map linear scale to logrithmic scale
-        var prob = prob * (1 / (i + 1));
-
-        sum2 += prob;
-        dict[i].probability = prob;
-    }
-
-    dict.forEach(function (item) {
-        // Map probability to 0-1 scale again.
-        item.probability = item.probability / sum2;
-    });
-
-    return dict;
-}
-
-// Select an item out of an array using its probability
-function weightedRandom(array) {
-    if (!array) return array;
-
-    var weighted = weightArray(array);
-    return weighted[Math.floor(Math.random() * weighted.length)];
-}
-
-// Filles an array with the correct wieght of each object
-function weightArray(array) {
-    return [].concat(...array.map((obj) => Array(Math.ceil(obj.probability * 100)).fill(obj)));
-}
 
 // Add messages to the chat window.
 var addToChat = function (text, message_side) {
@@ -211,3 +102,108 @@ var showNotification = function (text) {
     $('#notification_text').text(text);
     $('#notification').toast('show');
 };
+
+
+
+/* Main Logic Area */
+function sendRawMessage(text) {
+    if (!connected && text === "") { return; }
+    let message = {};
+    message["text"] = text;
+    connection.send(JSON.stringify(message));
+}
+
+async function sendMessage(text) {
+    text = spellcheck.fix(text);
+    text = await pos.process(text);
+    sendRawMessage(text);
+};
+
+function processResponse(rawdata) {
+    console.groupCollapsed('recieved response');
+    console.log(rawdata);
+    console.groupEnd();
+
+    rawdata = JSON.parse(rawdata);
+
+    var msg = {
+        phrase: rawdata["text"],
+        probability: 1
+    };
+
+    var response = {
+        message: msg,
+        beam_texts: transformProbability(rawdata["beam_texts"]),
+        quick_reply: rawdata["quick_replies"]
+    };
+
+    if (response.beam_texts)
+        response.message = helper.weightedRandom(response.beam_texts);
+
+    console.group('processing reponse');
+
+    console.group('message: ');
+    console.table([response.message]);
+    console.groupEnd();
+
+    console.group('beam_texts: ');
+    console.table(response.beam_texts);
+    console.groupEnd();
+
+    console.group('quick_reply: ');
+    console.table(response.quick_reply);
+    console.groupEnd();
+
+    console.groupEnd();
+
+    return response;
+}
+
+/**
+Function to map probability to logrithmic scale.
+This is due to the fact that the difference in 
+    probability between each responses are very similar.
+Doing this ensures that the response with the highest
+    probability will be prefered, even if the difference
+    in probability between responses are only a few %
+This also give the bot a chance to pick the lower probability
+    responses, which makes it more natural.
+
+@param array    Array of messages
+**/
+function transformProbability(array) {
+    if (!array) return array;
+    var dict = [];
+    var sum = 0;
+    array.forEach(function (item) {
+        //Create beam_text object
+        var beam_text = {
+            phrase: item[0],
+            probability: item[1]
+        }
+        dict.push(beam_text);
+        sum += beam_text.probability;
+    });
+
+    var sum2 = 0;
+    for (var i = 0; i < dict.length; i++) {
+        var val = dict[i].probability;
+        // Map probability to 0-1 scale.
+        var prob = 0.01 / (val / sum);
+        // Map linear scale to logrithmic scale
+        var prob = prob * (1 / (i + 1));
+
+        sum2 += prob;
+        dict[i].probability = prob;
+    }
+
+    dict.forEach(function (item) {
+        // Map probability to 0-1 scale again.
+        item.probability = item.probability / sum2;
+    });
+
+    // Process sentiment
+    dict = sentiment.process(dict);
+    return dict;
+}
+
