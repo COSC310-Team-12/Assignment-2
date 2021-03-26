@@ -6,4 +6,12 @@ Belown, in this README file can be found the link toward the project management 
 In total 9 tickets have been created. All of them with a particular element of the assignment (such as develpment, peer reviewing, and others).
 Each tickets specified the team member(s) mainly repsonsible in completing the task. However, it must be taken into account that if help was required, all team members could participate. 
 
-This is a test
+Testing
+
+The unit testing for this project was done using Jasmine for Node.js, given that most of the processing was performed by JS scripts. The necessary files to run the Unit Testing can be found the /spec and /lib directory. To run the tests on your local system, load the files on your IDE then run the following code on your terminal
+
+jasmine spec/testBot.js
+
+This should work if all the necessary libraries and directories are properly downloaded and stored in the right directories. The actual test can be found in /spec/testbot.js, where all the tests have the necesary information needed to run it. It should be noted that the /lib directory contains some duplicated .js files that have minor changes in order to actually test the methods.
+
+All methods tested are very important and necessary for correct running of the Chatbot.
