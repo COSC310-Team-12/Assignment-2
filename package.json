@@ -6,7 +6,9 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "test-init": "jasmine/bin/jasmine.js init",
+    "test": "jasmine/bin/jasmine.js"
   },
   "build": {
     "appId": "hablai",
@@ -30,10 +32,12 @@
     "jquery": "^3.6.0",
     "sentiment": "^5.0.2",
     "typo-js": "^1.2.0",
+    "webpack-karma-jasmine": "^4.0.0",
     "wordpos": "^2.1.0"
   },
   "devDependencies": {
     "electron": "^10.4.0",
-    "electron-builder": "^22.10.5"
+    "electron-builder": "^22.10.5",
+    "jasmine": "^3.7.0"
   }
 }
