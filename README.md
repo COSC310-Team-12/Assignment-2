@@ -8,9 +8,9 @@ Each tickets specified the team member(s) mainly repsonsible in completing the t
 
 **Testing**
 
-The unit testing for this project was done using Jasmine for Node.js, given that most of the processing was performed by JS scripts. The necessary files to run the Unit Testing can be found the /spec and /lib directory. To run the tests on your local system, load the files on your IDE then run the following code on your terminal
+The unit testing for this project was done using Jasmine for Node.js, given that most of the processing was performed by JS scripts. The necessary files to run the Unit Testing can be found the /spec and /lib directory. To run the tests on your local system, load the files on your IDE then run the following code on your terminal:
 
-jasmine spec/testBot.js
+> jasmine spec/testBot.js
 
 This should work if all the necessary libraries and directories are properly downloaded and stored in the right directories. The actual test can be found in /spec/testbot.js, where all the tests have the necesary information needed to run it. It should be noted that the /lib directory contains some duplicated .js files that have minor changes in order to actually test the methods.
 
