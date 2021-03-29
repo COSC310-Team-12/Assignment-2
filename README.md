@@ -6,6 +6,16 @@ Belown, in this README file can be found the link toward the project management 
 In total 9 tickets have been created. All of them with a particular element of the assignment (such as develpment, peer reviewing, and others).
 Each tickets specified the team member(s) mainly repsonsible in completing the task. However, it must be taken into account that if help was required, all team members could participate. 
 
+**Features**
+
+- Modern GUI
+- Board topics
+- Convincing responses outside of topics
+- Spelling mistake handling
+- Sentiment analysis - The bot utilizes sentiment analysis to give a more positive response.
+- POS tagging - The bot extracts common adverbs and adjectives from user's input and passes it to our synonym recognition system.
+- Synonym recongnition - The bot replaces complex adjectives and adverbs with common adjectives and adverbs, greatly improves the bot's accuracy.
+
 **Testing**
 
 The unit testing for this project was done using Jasmine for Node.js, given that most of the processing was performed by JS scripts. The necessary files to run the Unit Testing can be found the /spec and /lib directory. To run the tests on your local system, load the files on your IDE then run the following code on your terminal:
